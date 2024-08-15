@@ -1,0 +1,84 @@
+#mainJobs{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+
+#btnLinks{
+   display: flex;
+   justify-content: space-around;
+  align-items: end;
+   height: 50px;
+   margin-top: 20px;
+   margin-bottom: 0;
+  
+}
+
+#saveBTN{
+    /* background-color: #D5A1AB; */
+    margin-top: 10px;
+    margin-bottom:10px;
+ 
+
+}
+.saveBTN{
+    background-color: #D5A1AB;
+}
+#LinkBtn{
+    background-color: #16704C;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+
+
+}
+#cardHead{
+    margin-bottom: 30px;
+}
+
+.pointer{
+    cursor:pointer !important
+}
+#logo{
+    cursor:default;
+}
+
+#headlines{
+    margin-left: 40px;
+    width: 100%;
+}
+
+@media screen and (max-width: 482px){
+
+#mainJobs{
+    width: 100vw;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+
+}
+body{
+width: 100vw;
+}
+#responcivDiv{
+    width: 90vw !important
+}
+#saveBTN{
+    width: 30%;
+}
+#LinkBtn{
+    width: 30%;
+
+}
+
+
+}
+
+    
