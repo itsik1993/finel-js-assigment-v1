@@ -21,9 +21,11 @@ let savedjobs=document.querySelector("#savedjobs")
 let categoriArry=[];
 let AllJobsArry=[];
 let searchARRY=[];
+
 let categoryjobs=[]
 let favoritJobs=JSON.parse(localStorage.getItem("favoritJObsSaves")) || [];
-let ArryOfAllJobs = ne
+let ArryOfAllJobs = []
+let AllJobsID= new Set();
 
 
 async function getCategories(){
@@ -60,6 +62,7 @@ mainJobs.innerHTML=`
     
   }
 
+  cheackIfExist(AllJobsArry)
   BuildJobs(AllJobsArry)
 
 }
@@ -74,15 +77,15 @@ async function getSearch(categoryname=searchInput.value){
     </div>
   </div>
   `
-  
   try {
     const response= await fetch(`${baseurl}${categoryname}`)
     const data= await response.json()
     // console.log(data.jobs)
-    searchArry=data.jobs
-  
-
-    BuildJobs(searchArry)
+    searchARRY=data.jobs
+    console.log(searchARRY)
+    cheackIfExist(searchARRY)
+     BuildJobs(searchARRY)
+   
     
   } catch (error) {
     console.log(error)
@@ -131,14 +134,16 @@ mainJobs.innerHTML=`
        const data= await response.json();
        categoryjobs=data.jobs
 
-       
-       BuildJobs(categoryjobs)
+    
 
 
   } catch (error) {
     console.log(error)
     
   }
+  cheackIfExist(categoryjobs)
+       
+       BuildJobs(categoryjobs)
 }
 
 function BuildJobs(jobArry){
@@ -151,7 +156,7 @@ if(pages==="SavedJobs")
   }
 }
   else if(pages==="search")
-    jobArry=searchArry;
+    jobArry=searchARRY;
   else if(pages==="category")
     jobArry=categoryjobs
 else if(pages==="SavedJobs")
@@ -219,6 +224,43 @@ function homePage(){
 }
 
 
+function cheackIfExist(arry){
+
+  let randomArry=[]
+
+  
+if(ArryOfAllJobs.length===0)
+{
+  ArryOfAllJobs=arry;
+  arry.forEach((obj)=>{
+    AllJobsID.add(obj.id)
+
+  })
+
+  return;
+  
+}
+
+arry.forEach((jobelement)=>{
+
+ const boolian=AllJobsID.has(jobelement.id)
+if(!boolian)
+{
+  AllJobsID.add(jobelement.id)
+randomArry.push(jobelement)
+}
+
+})
+    
+randomArry.forEach((uniq)=>{
+
+  ArryOfAllJobs.push(uniq)
+})
+
+console.log(AllJobsID)
+console.log(ArryOfAllJobs)
+
+}
 
 
 
@@ -227,7 +269,7 @@ function homePage(){
 function SaveToFavorit(jobId){
   // alert("work")
   // const currentJob=JSON.parse(decodeURIComponent(j))
-  AllJobsArry.forEach((jobElment)=>{
+  ArryOfAllJobs.forEach((jobElment)=>{
 
     if(jobElment.id===jobId)
       favoritJobs.push(jobElment);
