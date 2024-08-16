@@ -1,7 +1,7 @@
 // url
-const  categories_url = "api/categories.json";
-const jobs_url = "api/remote-jobs.json";
-const baseurl ="api/byCategories/"
+const  categories_url = "https://remotive.com/api/remote-jobs/categories";
+const jobs_url = "https://remotive.com/api/remote-jobs?limit=20";
+// const baseurl ="https://remotive.com/api/remote-jobs?search="
 const serchCategory ="https://remotive.com/api/remote-jobs?category="
 //page
 let pages="";
@@ -78,7 +78,7 @@ async function getSearch(categoryname=searchInput.value){
   </div>
   `
   try {
-    const response= await fetch(`${baseurl}${categoryname}`)
+    const response= await fetch(`https://remotive.com/api/remote-jobs?search=${categoryname}&limit=20`)
     const data= await response.json()
     // console.log(data.jobs)
     searchARRY=data.jobs
@@ -89,7 +89,7 @@ async function getSearch(categoryname=searchInput.value){
     
   } catch (error) {
     console.log(error)
-    mainJobs.innerHTML="no jobs found try again"
+    
     
   }
 
@@ -130,7 +130,7 @@ mainJobs.innerHTML=`
 `
   try {
     // הערה- פה זה חיפוש לפי בחירת התבנית של הקטגוריה ולא חיפוש חופשי ולכן צריך לחבר API אמיתי
-       const response = await fetch(`https://remotive.com/api/remote-jobs?category=${categoryvalue}&limit=10`)
+       const response = await fetch(`https://remotive.com/api/remote-jobs?category=${categoryvalue}&limit=20`)
        const data= await response.json();
        categoryjobs=data.jobs
 
@@ -147,6 +147,8 @@ mainJobs.innerHTML=`
 }
 
 function BuildJobs(jobArry){
+
+ 
 if(pages==="SavedJobs")
 {
   jobArry=favoritJobs;
@@ -164,6 +166,10 @@ else if(pages==="SavedJobs")
 else if(pages==="AllJobs")
   jobArry=AllJobsArry;
 
+if(jobArry.length<1){
+  mainJobs.innerHTML="no jobs found try again"
+  return;
+}
   mainJobs.innerHTML="";
   
   jobArry.forEach((job,i)=>{
@@ -272,8 +278,11 @@ function SaveToFavorit(jobId){
   ArryOfAllJobs.forEach((jobElment)=>{
 
     if(jobElment.id===jobId)
+    {
       favoritJobs.push(jobElment);
-    localStorage.setItem("favoritJObsSaves",JSON.stringify(favoritJobs))
+      localStorage.setItem("favoritJObsSaves",JSON.stringify(favoritJobs))
+    }
+   
   })
   
   console.log(favoritJobs)
@@ -284,12 +293,22 @@ function SaveToFavorit(jobId){
 function Removefavorite(jobId){
 
   // const currentFavoritJob=JSON.parse(decodeURIComponent(j))
-  AllJobsArry.forEach((jobElment)=>{
+  // ArryOfAllJobs.forEach((jobElment)=>{
+
+  //   if(jobElment.id===jobId)
+  //   {
+  //     const index = favoritJobs.findIndex((work) => work.id === jobId);
+  //     favoritJobs.splice(index, 1);
+  //   localStorage.setItem("favoritJObsSaves",JSON.stringify(favoritJobs))
+
+  //   }
+  // })
+  favoritJobs.forEach((jobElment,i)=>{
 
     if(jobElment.id===jobId)
     {
-      const index = favoritJobs.findIndex((work) => work.id === jobId);
-      favoritJobs.splice(index, 1);
+      // const index = favoritJobs.findIndex((work) => work.id === jobId);
+      favoritJobs.splice(i, 1);
     localStorage.setItem("favoritJObsSaves",JSON.stringify(favoritJobs))
 
     }
