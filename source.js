@@ -80,7 +80,6 @@ async function getSearch(categoryname=searchInput.value){
   try {
     const response= await fetch(`https://remotive.com/api/remote-jobs?search=${categoryname}&limit=20`)
     const data= await response.json()
-    // console.log(data.jobs)
     searchARRY=data.jobs
     console.log(searchARRY)
     cheackIfExist(searchARRY)
@@ -120,7 +119,6 @@ function BuildCategoryNav(categoryArry){
 
 
 async function BuildjobsByCategory(categoryvalue){
-// יש כאן באג עיקרי כי אנחנו מגבילים את החיפוש , ולכן לא תמיד תהיה התאמה בגלל שאני רץ בALL JOBS על המערך ולא מעביר את האובייקט
 mainJobs.innerHTML=`
 <div class="d-flex justify-content-center">
   <div class="spinner-border" role="status">
@@ -129,7 +127,6 @@ mainJobs.innerHTML=`
 </div>
 `
   try {
-    // הערה- פה זה חיפוש לפי בחירת התבנית של הקטגוריה ולא חיפוש חופשי ולכן צריך לחבר API אמיתי
        const response = await fetch(`https://remotive.com/api/remote-jobs?category=${categoryvalue}&limit=20`)
        const data= await response.json();
        categoryjobs=data.jobs
@@ -273,8 +270,7 @@ console.log(ArryOfAllJobs)
 
 
 function SaveToFavorit(jobId){
-  // alert("work")
-  // const currentJob=JSON.parse(decodeURIComponent(j))
+ 
   ArryOfAllJobs.forEach((jobElment)=>{
 
     if(jobElment.id===jobId)
@@ -292,29 +288,17 @@ function SaveToFavorit(jobId){
 
 function Removefavorite(jobId){
 
-  // const currentFavoritJob=JSON.parse(decodeURIComponent(j))
-  // ArryOfAllJobs.forEach((jobElment)=>{
 
-  //   if(jobElment.id===jobId)
-  //   {
-  //     const index = favoritJobs.findIndex((work) => work.id === jobId);
-  //     favoritJobs.splice(index, 1);
-  //   localStorage.setItem("favoritJObsSaves",JSON.stringify(favoritJobs))
-
-  //   }
-  // })
   favoritJobs.forEach((jobElment,i)=>{
 
     if(jobElment.id===jobId)
     {
-      // const index = favoritJobs.findIndex((work) => work.id === jobId);
       favoritJobs.splice(i, 1);
     localStorage.setItem("favoritJObsSaves",JSON.stringify(favoritJobs))
 
     }
   })
  
-  // console.log(favoritJobs)
   BuildJobs()
 
 }
@@ -327,7 +311,6 @@ function Removefavorite(jobId){
 
 
 getCategories();
-// getAllJobs()
 homePage();
 
 
